@@ -6,7 +6,7 @@ defmodule Terminator.MixProject do
     [
       app: :terminator,
       version: @version,
-      elixir: "~> 1.7",
+      elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -90,6 +90,7 @@ defmodule Terminator.MixProject do
 
   defp aliases do
     [
+      install: ["ecto.create", "ecto.migrate"],
       test: ["ecto.create", "ecto.migrate", "test"]
     ]
   end
