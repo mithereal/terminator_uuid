@@ -35,7 +35,7 @@ defmodule Terminator.MixProject do
   defp deps do
     [
       {:ecto, "~> 3.0"},
-      {:ecto_sql, "~> 3.0"},
+      {:ecto_sql, "~> 3.6"},
       {:postgrex, "~> 0.16.4"},
       {:ex_doc, "~> 0.19", only: :dev, runtime: false},
       {:optimus, "~> 0.1.0", only: :dev},
