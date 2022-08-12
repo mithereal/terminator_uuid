@@ -90,8 +90,10 @@ defmodule Terminator.MixProject do
 
   defp aliases do
     [
-      install: ["ecto.create", "ecto.migrate"],
-      test: ["ecto.create", "ecto.migrate", "test"]
+      c: "compile",
+      "ecto.setup": ["ecto.create", "ecto.migrate"],
+      test: ["ecto.create", "ecto.migrate", "test"],
+      install: ["Terminator.install", "ecto.setup"]
     ]
   end
 end
