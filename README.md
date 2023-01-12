@@ -1,10 +1,11 @@
-# 🛡 Terminator 🛡
+# 🛡 Terminator with uuid 🛡
 
 [![Coverage Status](https://img.shields.io/coveralls/github/MilosMosovsky/terminator.svg?style=flat-square)](https://coveralls.io/github/MilosMosovsky/terminator)
 [![Build Status](https://img.shields.io/travis/MilosMosovsky/terminator.svg?style=flat-square)](https://travis-ci.org/MilosMosovsky/terminator)
 [![Version](https://img.shields.io/hexpm/v/terminator.svg?style=flat-square)](https://hex.pm/packages/terminator)
 
 Terminator is toolkit for granular ability management for performers. It allows you to define granular abilities such as:
+this differs from terminator in now the id key associations use ecto uuid vs integers
 
 - `Performer -> Ability`
 - `Performer -> [Ability, Ability, ...]`

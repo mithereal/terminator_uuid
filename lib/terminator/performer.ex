@@ -6,7 +6,7 @@ defmodule Terminator.Performer do
   @moduledoc """
   Performer is a main actor for determining abilities
   """
-  use Ecto.Schema
+  use Terminator.Schema
   import Ecto.Changeset
   import Ecto.Query
 

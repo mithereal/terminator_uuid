@@ -5,7 +5,7 @@ defmodule Terminator.Role do
 
   """
 
-  use Ecto.Schema
+  use Terminator.Schema
   import Ecto.Changeset
 
   alias __MODULE__

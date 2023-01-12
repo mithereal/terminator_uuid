@@ -2,7 +2,7 @@ defmodule Terminator.Ability do
   @moduledoc """
   Ability is main representation of a single permission
   """
-  use Ecto.Schema
+  use Terminator.Schema
   import Ecto.Changeset
 
   alias __MODULE__

@@ -49,7 +49,7 @@ defmodule Terminator.MixProject do
   end
 
   defp description() do
-    "Elixir ACL library for managing user abilities and permissions with support of ecto and compatibility with absinthe"
+    "Elixir ACL library for managing user abilities and permissions with support of ecto(uuid) and compatibility with absinthe"
   end
 
   defp package() do

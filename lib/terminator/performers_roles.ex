@@ -1,7 +1,7 @@
 defmodule Terminator.PerformersRoles do
   @moduledoc false
 
-  use Ecto.Schema
+  use Terminator.Schema
 
   schema "terminator_performers_roles" do
     belongs_to(:performer, Terminator.Performer)

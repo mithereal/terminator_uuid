@@ -1,7 +1,7 @@
 defmodule Terminator.PerformersEntities do
   @moduledoc false
 
-  use Ecto.Schema
+  use Terminator.Schema
   import Ecto.Changeset
   alias __MODULE__
 
