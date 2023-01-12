@@ -4,8 +4,8 @@ defmodule Terminator.PerformersRoles do
   use Terminator.Schema
 
   schema "terminator_performers_roles" do
-    belongs_to(:performer, Terminator.Performer)
-    belongs_to(:role, Terminator.Role)
+    belongs_to(:performer, Terminator.Performer, type: :binary_id)
+    belongs_to(:role, Terminator.Role, type: :binary_id)
 
     timestamps()
   end
