@@ -1,11 +1,11 @@
-defmodule Terminator.PerformersRoles do
+defmodule Terminator.UUID.PerformersRoles do
   @moduledoc false
 
-  use Ecto.Schema
+  use Terminator.UUID.Schema
 
-  schema "terminator_performers_roles" do
-    belongs_to(:performer, Terminator.Performer)
-    belongs_to(:role, Terminator.Role)
+  schema "terminator_uuid_performers_roles" do
+    belongs_to(:performer, Terminator.UUID.Performer, type: :binary_id)
+    belongs_to(:role, Terminator.UUID.Role, type: :binary_id)
 
     timestamps()
   end

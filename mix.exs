@@ -1,10 +1,10 @@
-defmodule Terminator.MixProject do
+defmodule Terminator.UUID.MixProject do
   use Mix.Project
 
   @version "0.5.3"
   def project do
     [
-      app: :terminator,
+      app: :terminator_uuid,
       version: @version,
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
@@ -27,7 +27,7 @@ defmodule Terminator.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Terminator.Application, []}
+      mod: {Terminator.UUID.Application, []}
     ]
   end
 
@@ -49,14 +49,14 @@ defmodule Terminator.MixProject do
   end
 
   defp description() do
-    "Elixir ACL library for managing user abilities and permissions with support of ecto and compatibility with absinthe"
+    "Elixir ACL library for managing user abilities and permissions with support of ecto(uuid) and compatibility with absinthe"
   end
 
   defp package() do
     [
       files: ~w(lib priv/repo/migrations .formatter.exs mix.exs README*),
       licenses: ["GPL"],
-      links: %{"GitHub" => "https://github.com/MilosMosovsky/terminator"}
+      links: %{"GitHub" => "https://github.com/data-twister/terminator"}
     ]
   end
 
@@ -64,12 +64,12 @@ defmodule Terminator.MixProject do
     [
       extras: ["README.md"],
       main: "readme",
-      source_url: "https://github.com/MilosMosovsky/terminator",
+      source_url: "https://github.com/data-twister/terminator",
       groups_for_modules: [
         Models: [
-          Terminator.Performer,
-          Terminator.Role,
-          Terminator.Ability
+          Terminator.UUID.Performer,
+          Terminator.UUID.Role,
+          Terminator.UUID.Ability
         ]
       ]
     ]
@@ -93,7 +93,7 @@ defmodule Terminator.MixProject do
       c: "compile",
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       test: ["ecto.create", "ecto.migrate", "test"],
-      install: ["Terminator.install", "ecto.setup"]
+      install: ["Terminator.UUID.install", "ecto.setup"]
     ]
   end
 end

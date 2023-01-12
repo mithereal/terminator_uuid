@@ -1,8 +1,8 @@
-defmodule Terminator.Factory do
-  use ExMachina.Ecto, repo: Terminator.Repo
-  alias Terminator.Performer
-  alias Terminator.Ability
-  alias Terminator.Role
+defmodule Terminator.UUID.Factory do
+  use ExMachina.Ecto, repo: Terminator.UUID.Repo
+  alias Terminator.UUID.Performer
+  alias Terminator.UUID.Ability
+  alias Terminator.UUID.Role
 
   def performer_factory do
     %Performer{}

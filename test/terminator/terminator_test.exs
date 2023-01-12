@@ -95,15 +95,15 @@ defmodule Post do
   end
 end
 
-defmodule Terminator.TerminatorTest do
-  use Terminator.EctoCase
+defmodule Terminator.UUID.TerminatorTest do
+  use Terminator.UUID.EctoCase
 
   setup do
-    Terminator.reset_session()
+    Terminator.UUID.reset_session()
     :ok
   end
 
-  describe "Terminator.create_terminator" do
+  describe "Terminator.UUID.create_terminator" do
     test "loads macros" do
       functions = Post.__info__(:functions)
 
@@ -120,7 +120,7 @@ defmodule Terminator.TerminatorTest do
       performer = insert(:performer)
       role = insert(:role, identifier: "editor")
 
-      Terminator.Performer.grant(performer, role)
+      Terminator.UUID.Performer.grant(performer, role)
 
       assert {:error, "Performer is not granted to perform this action"} == Post.delete(performer)
     end
@@ -129,7 +129,7 @@ defmodule Terminator.TerminatorTest do
       performer = insert(:performer)
       role = insert(:role, identifier: "admin")
 
-      performer = Terminator.Performer.grant(performer, role)
+      performer = Terminator.UUID.Performer.grant(performer, role)
       assert {:ok, "Authorized"} == Post.delete(performer)
     end
 
@@ -143,7 +143,7 @@ defmodule Terminator.TerminatorTest do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "view_post")
 
-      performer = Terminator.Performer.grant(performer, ability)
+      performer = Terminator.UUID.Performer.grant(performer, ability)
 
       assert {:error, "Performer is not granted to perform this action"} == Post.update(performer)
     end
@@ -152,7 +152,7 @@ defmodule Terminator.TerminatorTest do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "update_post")
 
-      performer = Terminator.Performer.grant(performer, ability)
+      performer = Terminator.UUID.Performer.grant(performer, ability)
 
       assert {:ok, "Authorized"} == Post.update(performer)
     end
@@ -161,7 +161,7 @@ defmodule Terminator.TerminatorTest do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "delete_performer")
 
-      performer = Terminator.Performer.grant(performer, ability, performer)
+      performer = Terminator.UUID.Performer.grant(performer, ability, performer)
 
       assert {:ok, "Authorized"} == Post.entity_update(performer)
     end
@@ -170,7 +170,7 @@ defmodule Terminator.TerminatorTest do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "update_post")
 
-      performer = Terminator.Performer.grant(performer, ability, performer)
+      performer = Terminator.UUID.Performer.grant(performer, ability, performer)
 
       assert {:error, "Performer is not granted to perform this action"} ==
                Post.entity_update(performer)
@@ -181,8 +181,8 @@ defmodule Terminator.TerminatorTest do
       role = insert(:role, identifier: "admin", name: "Administator")
       ability = insert(:ability, identifier: "view_post")
 
-      role = Terminator.Role.grant(role, ability)
-      performer = Terminator.Performer.grant(performer, role)
+      role = Terminator.UUID.Role.grant(role, ability)
+      performer = Terminator.UUID.Performer.grant(performer, role)
 
       assert {:error, "Performer is not granted to perform this action"} == Post.update(performer)
     end
@@ -192,8 +192,8 @@ defmodule Terminator.TerminatorTest do
       role = insert(:role, identifier: "admin", name: "Administator")
       ability = insert(:ability, identifier: "update_post")
 
-      role = Terminator.Role.grant(role, ability)
-      performer = Terminator.Performer.grant(performer, role)
+      role = Terminator.UUID.Role.grant(role, ability)
+      performer = Terminator.UUID.Performer.grant(performer, role)
 
       assert {:ok, "Authorized"} == Post.update(performer)
     end
@@ -205,10 +205,10 @@ defmodule Terminator.TerminatorTest do
       ability = insert(:ability, identifier: "delete_post")
       ability_update = insert(:ability, identifier: "update_post")
 
-      role = Terminator.Role.grant(role, ability)
-      role_editor = Terminator.Role.grant(role_editor, ability_update)
-      performer = Terminator.Performer.grant(performer, role)
-      performer = Terminator.Performer.grant(performer, role_editor)
+      role = Terminator.UUID.Role.grant(role, ability)
+      role_editor = Terminator.UUID.Role.grant(role_editor, ability_update)
+      performer = Terminator.UUID.Performer.grant(performer, role)
+      performer = Terminator.UUID.Performer.grant(performer, role_editor)
 
       assert {:ok, "Authorized"} == Post.update(performer)
     end
@@ -225,7 +225,7 @@ defmodule Terminator.TerminatorTest do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "update_post")
 
-      performer = Terminator.Performer.grant(performer, ability)
+      performer = Terminator.UUID.Performer.grant(performer, ability)
 
       assert {:ok, "Authorized"} == Post.no_macro(performer)
     end
@@ -234,43 +234,43 @@ defmodule Terminator.TerminatorTest do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "update_post")
 
-      performer = Terminator.Performer.grant(performer, ability)
+      performer = Terminator.UUID.Performer.grant(performer, ability)
 
       assert {:ok, "Authorized"} == Post.no_permissions(performer)
     end
   end
 
-  describe "Terminator.authorize!/1" do
+  describe "Terminator.UUID.authorize!/1" do
     test "it evaluates empty conditions as true" do
-      assert :ok == Terminator.authorize!([])
+      assert :ok == Terminator.UUID.authorize!([])
     end
   end
 
-  describe "Terminator.load_and_store_performer/1" do
+  describe "Terminator.UUID.load_and_store_performer/1" do
     test "allows ability to not preloaded performer from database" do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "update_post")
 
       not_loaded_performer = %{performer_id: performer.id}
-      Terminator.Performer.grant(performer, ability)
+      Terminator.UUID.Performer.grant(performer, ability)
 
       assert {:ok, "Authorized"} == Post.update(not_loaded_performer)
     end
   end
 
-  describe "Terminator.store_performer/1" do
+  describe "Terminator.UUID.store_performer/1" do
     test "allows ability to performer loaded on different struct" do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "update_post")
 
-      performer = Terminator.Performer.grant(performer, ability)
+      performer = Terminator.UUID.Performer.grant(performer, ability)
       user = %{performer: performer}
 
       assert {:ok, "Authorized"} == Post.update(user)
     end
   end
 
-  describe "Terminator.calculated/1" do
+  describe "Terminator.UUID.calculated/1" do
     test "grants calculated permissions" do
       performer = insert(:performer)
       assert {:ok, "Authorized"} == Post.calculated(performer, true)
@@ -290,42 +290,42 @@ defmodule Terminator.TerminatorTest do
     end
   end
 
-  describe "Terminator.has_ability?/2" do
+  describe "Terminator.UUID.has_ability?/2" do
     test "grants ability passed as an argument" do
       performer = insert(:performer)
       ability = insert(:ability, identifier: "update_post")
 
-      performer = Terminator.Performer.grant(performer, ability)
+      performer = Terminator.UUID.Performer.grant(performer, ability)
 
-      assert Terminator.has_ability?(performer, :update_post)
+      assert Terminator.UUID.has_ability?(performer, :update_post)
 
-      refute Terminator.has_ability?(performer, :delete_post)
+      refute Terminator.UUID.has_ability?(performer, :delete_post)
     end
   end
 
-  describe "Terminator.has_role?/2" do
+  describe "Terminator.UUID.has_role?/2" do
     test "grants role passed as an argument" do
       performer = insert(:performer)
       role = insert(:role, identifier: "admin", name: "Administrator")
 
-      performer = Terminator.Performer.grant(performer, role)
+      performer = Terminator.UUID.Performer.grant(performer, role)
 
-      assert Terminator.has_role?(performer, :admin)
+      assert Terminator.UUID.has_role?(performer, :admin)
 
-      refute Terminator.has_role?(performer, :editor)
+      refute Terminator.UUID.has_role?(performer, :editor)
     end
   end
 
-  describe "Terminator.perform_authorization!/3" do
+  describe "Terminator.UUID.perform_authorization!/3" do
     test "performs authorization" do
       performer = insert(:performer)
       role = insert(:role, identifier: "admin", name: "Administrator")
 
-      performer = Terminator.Performer.grant(performer, role)
+      performer = Terminator.UUID.Performer.grant(performer, role)
 
-      assert Terminator.perform_authorization!(performer)
-      assert Terminator.perform_authorization!(performer, [])
-      assert Terminator.perform_authorization!(performer, [], [])
+      assert Terminator.UUID.perform_authorization!(performer)
+      assert Terminator.UUID.perform_authorization!(performer, [])
+      assert Terminator.UUID.perform_authorization!(performer, [], [])
     end
   end
 end

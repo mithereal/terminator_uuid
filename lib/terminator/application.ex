@@ -1,4 +1,4 @@
-defmodule Terminator.Application do
+defmodule Terminator.UUID.Application do
   @moduledoc false
   use Application
 
@@ -6,18 +6,18 @@ defmodule Terminator.Application do
     import Supervisor.Spec
 
     children = [
-      worker(Terminator.Registry, [])
+      worker(Terminator.UUID.Registry, [])
     ]
 
     children = children ++ load_repos()
 
-    opts = [strategy: :one_for_one, name: Terminator.Supervisor]
+    opts = [strategy: :one_for_one, name: Terminator.UUID.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
   defp load_repos do
     case Application.get_env(:terminator, :ecto_repos) do
-      nil -> [Terminator.Repo]
+      nil -> [Terminator.UUID.Repo]
       repos -> repos
     end
   end

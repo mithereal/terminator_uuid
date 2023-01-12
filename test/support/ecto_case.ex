@@ -1,24 +1,24 @@
-defmodule Terminator.EctoCase do
+defmodule Terminator.UUID.EctoCase do
   use ExUnit.CaseTemplate
 
   using do
     quote do
-      alias Terminator.Repo
+      alias Terminator.UUID.Repo
 
       import Ecto
       import Ecto.Query
-      import Terminator.EctoCase
-      import Terminator.Factory
+      import Terminator.UUID.EctoCase
+      import Terminator.UUID.Factory
 
       # and any other stuff
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Terminator.Repo)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Terminator.UUID.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Terminator.Repo, {:shared, self()})
+      Ecto.Adapters.SQL.Sandbox.mode(Terminator.UUID.Repo, {:shared, self()})
     end
 
     :ok

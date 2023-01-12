@@ -3,9 +3,9 @@
 use Mix.Config
 
 config :terminator,
-  ecto_repos: [Terminator.Repo]
+  ecto_repos: [Terminator.UUID.Repo]
 
-config :terminator, Terminator.Repo,
+config :terminator, Terminator.UUID.Repo,
   username: "postgres",
   password: "postgres",
   database: "api_dev",

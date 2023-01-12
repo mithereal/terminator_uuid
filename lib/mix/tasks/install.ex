@@ -1,7 +1,7 @@
-defmodule Mix.Tasks.Terminator.Install do
+defmodule Mix.Tasks.Terminator.UUID.Install do
   @moduledoc """
     After configuring your default ecto repo in `:ecto_repos`
-    Run mix Terminator.install to generates a `setup_terminator_tables` migration,
+    Run mix Terminator.UUID.install to generates a `setup_terminator_uuid_tables` migration,
     which Terminator tables, as well as required indexes.
   """
 
@@ -9,7 +9,7 @@ defmodule Mix.Tasks.Terminator.Install do
     source = Path.join(Application.app_dir(:terminator, "/priv/"), "setup_tables.exs")
 
     target =
-      Path.join(File.cwd!(), "/priv/repo/migrations/#{timestamp()}_setup_terminator_tables.exs")
+      Path.join(File.cwd!(), "/priv/repo/migrations/#{timestamp()}_setup_terminator_uuid_tables.exs")
 
     if !File.dir?(target) do
       File.mkdir_p("priv/repo/migrations/")

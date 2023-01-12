@@ -1,8 +1,8 @@
-defmodule Terminator.Ability do
+defmodule Terminator.UUID.Ability do
   @moduledoc """
   Ability is main representation of a single permission
   """
-  use Ecto.Schema
+  use Terminator.UUID.Schema
   import Ecto.Changeset
 
   alias __MODULE__
@@ -10,7 +10,7 @@ defmodule Terminator.Ability do
   @typedoc "An ability struct"
   @type t :: %Ability{}
 
-  schema "terminator_abilities" do
+  schema "terminator_uuid_abilities" do
     field(:identifier, :string)
     field(:name, :string)
 

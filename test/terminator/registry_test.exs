@@ -1,13 +1,13 @@
-defmodule Terminator.RegistyTest do
+defmodule Terminator.UUID.RegistyTest do
   use ExUnit.Case
-  alias Terminator.Registry
+  alias Terminator.UUID.Registry
 
   setup do
-    :ets.delete_all_objects(Terminator.Registry)
+    :ets.delete_all_objects(Terminator.UUID.Registry)
     :ok
   end
 
-  describe "Terminator.Registry.insert/2" do
+  describe "Terminator.UUID.Registry.insert/2" do
     test "insert string item" do
       assert Registry.insert(:test_item, "John Snow")
     end
@@ -21,13 +21,13 @@ defmodule Terminator.RegistyTest do
     end
   end
 
-  describe "Terminator.Registry.add/2" do
+  describe "Terminator.UUID.Registry.add/2" do
     test "add array item to the ets table" do
       assert Registry.add(:test_item, :dummy)
     end
   end
 
-  describe "Terminator.Registry.lookup/1" do
+  describe "Terminator.UUID.Registry.lookup/1" do
     test "lookup string item" do
       Registry.insert(:test_item, "John Snow")
 
