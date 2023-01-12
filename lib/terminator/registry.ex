@@ -1,4 +1,4 @@
-defmodule Terminator.Registry do
+defmodule Terminator.UUID.Registry do
   @moduledoc false
 
   use GenServer

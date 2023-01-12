@@ -1,8 +1,8 @@
-defmodule Terminator.PerformersEntitiesTest do
-  use Terminator.EctoCase
-  alias Terminator.PerformersEntities
+defmodule Terminator.UUID.PerformersEntitiesTest do
+  use Terminator.UUID.EctoCase
+  alias Terminator.UUID.PerformersEntities
 
-  describe "Terminator.PerformersEntities.create/3" do
+  describe "Terminator.UUID.PerformersEntities.create/3" do
     test "creates entity relation for performer" do
       performer = insert(:performer)
       struct = insert(:role)
@@ -13,7 +13,7 @@ defmodule Terminator.PerformersEntitiesTest do
       performer = performer |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert "elixir_terminator_role" == Enum.at(performer.entities, 0).assoc_type
+      assert "elixir_terminator_uuid_role" == Enum.at(performer.entities, 0).assoc_type
     end
 
     test "creates entity relation for performer without abilities" do
@@ -25,7 +25,7 @@ defmodule Terminator.PerformersEntitiesTest do
       performer = performer |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert "elixir_terminator_role" == Enum.at(performer.entities, 0).assoc_type
+      assert "elixir_terminator_uuid_role" == Enum.at(performer.entities, 0).assoc_type
     end
   end
 end

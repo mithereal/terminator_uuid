@@ -23,7 +23,7 @@ defmodule Sample.Post
   use Terminator
 
   def delete_post(id) do
-    performer = Sample.Repo.get(Terminator.Performer, 1)
+    performer = Sample.Repo.get(Terminator.UUID.Performer, 1)
     load_and_authorize_performer(performer)
     post = %Post{id: 1}
 
@@ -76,10 +76,10 @@ end
 
 ```elixir
 # In your config/config.exs file
-config :terminator, Terminator.Repo,
+config :terminator, Terminator.UUID.Repo,
   username: "postgres",
   password: "postgres",
-  database: "terminator_dev",
+  database: "terminator_uuid_dev",
   hostname: "localhost"
 ```
 
@@ -99,7 +99,7 @@ defmodule Sample.Migrations.CreateUsersTable do
   def change do
     create table(:users) do
       add :username, :string
-      add :performer_id, references(Terminator.Performer.table())
+      add :performer_id, references(Terminator.UUID.Performer.table())
 
       timestamps()
     end
@@ -110,7 +110,7 @@ end
 
 ```
 
-This will allow you link any internal entity with 1-1 association to performers. Please note that you need to create performer on each user creation (e.g with `Terminator.Performer.changeset/2`) and call `put_assoc` inside your changeset
+This will allow you link any internal entity with 1-1 association to performers. Please note that you need to create performer on each user creation (e.g with `Terminator.UUID.Performer.changeset/2`) and call `put_assoc` inside your changeset
 
 ```elixir
 # In schema defintion
@@ -120,7 +120,7 @@ defmodule Sample.User do
   schema "users" do
     field :username, :String
 
-    belongs_to :performer, Terminator.Performer
+    belongs_to :performer, Terminator.UUID.Performer
 
     timestamps()
   end
@@ -137,8 +137,8 @@ defmodule Sample.Post
     load_and_authorize_performer(user)
     # Function allows multiple signatues of performer it can
     # be either:
-    #  * %Terminator.Performer{}
-    #  * %AnyStruct{performer: %Terminator.Performer{}}
+    #  * %Terminator.UUID.Performer{}
+    #  * %AnyStruct{performer: %Terminator.UUID.Performer{}}
     #  * %AnyStruct{performer_id: id} (this will perform database preload)
 
 
@@ -290,11 +290,11 @@ end
 Terminator allows you to grant abilities on any particular struct. Struct needs to have signature of `%{__struct__: entity_name, id: entity_id}` to infer correct relations. Lets assume that we want to grant `:delete` ability on particular `Post` for our performer:
 
 ```elixir
-iex> {:ok, performer} = %Terminator.Performer{} |> Terminator.Repo.insert()
+iex> {:ok, performer} = %Terminator.UUID.Performer{} |> Terminator.UUID.Repo.insert()
 iex> post = %Post{id: 1}
 iex> ability = %Ability{identifier: "delete"}
-iex> Terminator.Performer.grant(performer, :delete, post)
-iex> Terminator.has_ability?(performer, :delete, post)
+iex> Terminator.UUID.Performer.grant(performer, :delete, post)
+iex> Terminator.UUID.has_ability?(performer, :delete, post)
 true
 ```
 
@@ -323,50 +323,50 @@ Let's assume we want to create new `Role` - _admin_ which is able to delete acco
 1. Create performer
 
 ```elixir
-iex> {:ok, performer} = %Terminator.Performer{} |> Terminator.Repo.insert()
+iex> {:ok, performer} = %Terminator.UUID.Performer{} |> Terminator.UUID.Repo.insert()
 ```
 
 2. Create some abilities
 
 ```elixir
-iex> {:ok, ability_delete} = Terminator.Ability.build("delete_accounts", "Delete accounts of users") |> Terminator.Repo.insert()
-iex> {:ok, ability_ban} = Terminator.Ability.build("ban_accounts", "Ban users") |> Terminator.Repo.insert()
+iex> {:ok, ability_delete} = Terminator.UUID.Ability.build("delete_accounts", "Delete accounts of users") |> Terminator.UUID.Repo.insert()
+iex> {:ok, ability_ban} = Terminator.UUID.Ability.build("ban_accounts", "Ban users") |> Terminator.UUID.Repo.insert()
 ```
 
 3. Create role
 
 ```elixir
-iex> {:ok, role} = Terminator.Role.build("admin", [], "Site administrator") |> Terminator.Repo.insert()
+iex> {:ok, role} = Terminator.UUID.Role.build("admin", [], "Site administrator") |> Terminator.UUID.Repo.insert()
 ```
 
 4. Grant abilities to a role
 
 ```elixir
-iex> Terminator.Role.grant(role, ability_delete)
+iex> Terminator.UUID.Role.grant(role, ability_delete)
 ```
 
 5. Grant role to a performer
 
 ```elixir
-iex> Terminator.Performer.grant(performer, role)
+iex> Terminator.UUID.Performer.grant(performer, role)
 ```
 
 6. Grant abilities to a performer
 
 ```elixir
-iex> Terminator.Performer.grant(performer, ability_ban)
+iex> Terminator.UUID.Performer.grant(performer, ability_ban)
 ```
 
 ```elixir
-iex> performer |> Terminator.Repo.preload([:roles, :abilities])
-%Terminator.Performer{
+iex> performer |> Terminator.UUID.Repo.preload([:roles, :abilities])
+%Terminator.UUID.Performer{
   abilities: [
-    %Terminator.Ability{
+    %Terminator.UUID.Ability{
       identifier: "ban_accounts"
     }
   ]
   roles: [
-    %Terminator.Role{
+    %Terminator.UUID.Role{
       identifier: "admin"
       abilities: ["delete_accounts"]
     }
@@ -379,19 +379,19 @@ iex> performer |> Terminator.Repo.preload([:roles, :abilities])
 Same as we can grant any abilities to models we can also revoke them.
 
 ```elixir
-iex> Terminator.Performer.revoke(performer, role)
-iex> performer |> Terminator.Repo.preload([:roles, :abilities])
-%Terminator.Performer{
+iex> Terminator.UUID.Performer.revoke(performer, role)
+iex> performer |> Terminator.UUID.Repo.preload([:roles, :abilities])
+%Terminator.UUID.Performer{
   abilities: [
-    %Terminator.Ability{
+    %Terminator.UUID.Ability{
       identifier: "ban_accounts"
     }
   ]
   roles: []
 }
-iex> Terminator.Performer.revoke(performer, ability_ban)
-iex> performer |> Terminator.Repo.preload([:roles, :abilities])
-%Terminator.Performer{
+iex> Terminator.UUID.Performer.revoke(performer, ability_ban)
+iex> performer |> Terminator.UUID.Repo.preload([:roles, :abilities])
+%Terminator.UUID.Performer{
   abilities: []
   roles: []
 }

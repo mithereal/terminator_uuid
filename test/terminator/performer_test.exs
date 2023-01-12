@@ -1,13 +1,13 @@
-defmodule Terminator.PerformerTest do
-  use Terminator.EctoCase
-  alias Terminator.Performer
+defmodule Terminator.UUID.PerformerTest do
+  use Terminator.UUID.EctoCase
+  alias Terminator.UUID.Performer
 
   setup do
-    Terminator.reset_session()
+    Terminator.UUID.reset_session()
     :ok
   end
 
-  describe "Terminator.Performer.changeset/2" do
+  describe "Terminator.UUID.Performer.changeset/2" do
     test "changeset is valid" do
       changeset = Performer.changeset(%Performer{}, %{})
 
@@ -15,7 +15,7 @@ defmodule Terminator.PerformerTest do
     end
   end
 
-  describe "Terminator.Performer.grant/2" do
+  describe "Terminator.UUID.Performer.grant/2" do
     test "rejects invalid grant" do
       assert_raise ArgumentError, fn ->
         Performer.grant(nil, nil)
@@ -148,7 +148,7 @@ defmodule Terminator.PerformerTest do
     end
   end
 
-  describe "Terminator.Performer.revoke/2" do
+  describe "Terminator.UUID.Performer.revoke/2" do
     test "rejects invalid grant" do
       assert_raise ArgumentError, fn ->
         Performer.revoke(nil, nil)
@@ -252,7 +252,7 @@ defmodule Terminator.PerformerTest do
     end
   end
 
-  describe "Terminator.Performer.revoke/3" do
+  describe "Terminator.UUID.Performer.revoke/3" do
     test "rejects invalid revoke" do
       assert_raise ArgumentError, fn ->
         Performer.grant(nil, nil, nil)
@@ -268,10 +268,10 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
 
       performer = Performer.revoke(performer, ability, struct)
-      refute Terminator.has_ability?(performer, :view_role, struct)
+      refute Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
 
     test "revokes ability from inherited performer on struct" do
@@ -283,10 +283,10 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
 
       performer = Performer.revoke(%{performer: performer}, ability, struct)
-      refute Terminator.has_ability?(performer, :view_role, struct)
+      refute Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
 
     test "revokes ability from inherited performer from id on struct" do
@@ -298,14 +298,14 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
 
       performer = Performer.revoke(%{performer_id: performer.id}, ability, struct)
-      refute Terminator.has_ability?(performer, :view_role, struct)
+      refute Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
   end
 
-  describe "Terminator.Performer.grant/3" do
+  describe "Terminator.UUID.Performer.grant/3" do
     test "rejects invalid grant" do
       assert_raise ArgumentError, fn ->
         Performer.revoke(nil, nil, nil)
@@ -322,7 +322,7 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
 
     test "grant ability to inherited performer on struct" do
@@ -335,7 +335,7 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
 
     test "grant ability to inherited performer from id on struct" do
@@ -348,7 +348,7 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
 
     test "revokes ability to performer on struct" do
@@ -361,13 +361,13 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
 
       Performer.revoke(performer, ability, struct)
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 0 == length(performer.entities)
-      refute Terminator.has_ability?(performer, :view_role, struct)
+      refute Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
 
     test "revokes no ability to performer on struct" do
@@ -380,7 +380,7 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 0 == length(performer.entities)
-      refute Terminator.has_ability?(performer, :view_role, struct)
+      refute Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
 
     test "grants multiple abilities to performer on struct" do
@@ -395,8 +395,8 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
-      assert Terminator.has_ability?(performer, :delete_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :delete_role, struct)
     end
 
     test "revokes multiple abilities to performer on struct" do
@@ -411,12 +411,12 @@ defmodule Terminator.PerformerTest do
       performer = Repo.get(Performer, performer.id) |> Repo.preload([:entities])
 
       assert 1 == length(performer.entities)
-      assert Terminator.has_ability?(performer, :view_role, struct)
-      assert Terminator.has_ability?(performer, :delete_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :delete_role, struct)
 
       Performer.revoke(performer, ability_delete, struct)
-      refute Terminator.has_ability?(performer, :delete_role, struct)
-      assert Terminator.has_ability?(performer, :view_role, struct)
+      refute Terminator.UUID.has_ability?(performer, :delete_role, struct)
+      assert Terminator.UUID.has_ability?(performer, :view_role, struct)
     end
   end
 end

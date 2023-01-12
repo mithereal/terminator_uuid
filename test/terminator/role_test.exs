@@ -1,13 +1,13 @@
-defmodule Terminator.RoleTest do
-  use Terminator.EctoCase
-  alias Terminator.Role
+defmodule Terminator.UUID.RoleTest do
+  use Terminator.UUID.EctoCase
+  alias Terminator.UUID.Role
 
   setup do
-    Terminator.reset_session()
+    Terminator.UUID.reset_session()
     :ok
   end
 
-  describe "Terminator.Role.changeset/2" do
+  describe "Terminator.UUID.Role.changeset/2" do
     test "changeset is invalid" do
       changeset = Role.changeset(%Role{}, %{})
 
@@ -21,7 +21,7 @@ defmodule Terminator.RoleTest do
     end
   end
 
-  describe "Terminator.Role.build/3" do
+  describe "Terminator.UUID.Role.build/3" do
     test "builds changeset" do
       classic_changeset =
         Role.changeset(%Role{}, %{
@@ -36,7 +36,7 @@ defmodule Terminator.RoleTest do
     end
   end
 
-  describe "Terminator.Role.grant/2" do
+  describe "Terminator.UUID.Role.grant/2" do
     test "rejects invalid grant" do
       assert_raise ArgumentError, fn ->
         Role.grant(nil, nil)
@@ -83,7 +83,7 @@ defmodule Terminator.RoleTest do
     end
   end
 
-  describe "Terminator.Role.revoke/2" do
+  describe "Terminator.UUID.Role.revoke/2" do
     test "rejects invalid grant" do
       assert_raise ArgumentError, fn ->
         Role.revoke(nil, nil)

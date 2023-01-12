@@ -2,25 +2,25 @@ defmodule Post do
   defstruct name: "john"
 end
 
-defmodule Terminator.Performer do
+defmodule Terminator.UUID.Performer do
   @moduledoc """
   Performer is a main actor for determining abilities
   """
-  use Terminator.Schema
+  use Terminator.UUID.Schema
   import Ecto.Changeset
   import Ecto.Query
 
   alias __MODULE__
-  alias Terminator.Ability
-  alias Terminator.Repo
-  alias Terminator.Role
-  alias Terminator.PerformersEntities
-  alias Terminator.PerformersRoles
+  alias Terminator.UUID.Ability
+  alias Terminator.UUID.Repo
+  alias Terminator.UUID.Role
+  alias Terminator.UUID.PerformersEntities
+  alias Terminator.UUID.PerformersRoles
 
   @typedoc "A performer struct"
   @type t :: %Performer{}
 
-  schema "terminator_performers" do
+  schema "terminator_uuid_performers" do
     field(:abilities, {:array, :string}, default: [])
 
     many_to_many(:roles, Role, join_through: PerformersRoles)
@@ -39,17 +39,17 @@ defmodule Terminator.Performer do
 
   ## Examples
 
-  Function accepts either `Terminator.Ability` or `Terminator.Role` grants.
+  Function accepts either `Terminator.UUID.Ability` or `Terminator.UUID.Role` grants.
   Function is merging existing grants with the new ones, so calling grant with same
   grants will not duplicate entries in table.
 
   To grant particular ability to a given performer
 
-      iex> Terminator.Performer.grant(%Terminator.Performer{id: 1}, %Terminator.Ability{id: 1})
+      iex> Terminator.UUID.Performer.grant(%Terminator.UUID.Performer{id: 1}, %Terminator.UUID.Ability{id: 1})
 
   To grant particular role to a given performer
 
-      iex> Terminator.Performer.grant(%Terminator.Performer{id: 1}, %Terminator.Role{id: 1})
+      iex> Terminator.UUID.Performer.grant(%Terminator.UUID.Performer{id: 1}, %Terminator.UUID.Role{id: 1})
 
   """
 
@@ -144,16 +144,16 @@ defmodule Terminator.Performer do
 
   ## Examples
 
-  Function accepts either `Terminator.Ability` or `Terminator.Role` grants.
-  Function is directly opposite of `Terminator.Performer.grant/2`
+  Function accepts either `Terminator.UUID.Ability` or `Terminator.UUID.Role` grants.
+  Function is directly opposite of `Terminator.UUID.Performer.grant/2`
 
   To revoke particular ability from a given performer
 
-      iex> Terminator.Performer.revoke(%Terminator.Performer{id: 1}, %Terminator.Ability{id: 1})
+      iex> Terminator.UUID.Performer.revoke(%Terminator.UUID.Performer{id: 1}, %Terminator.UUID.Ability{id: 1})
 
   To revoke particular role from a given performer
 
-      iex> Terminator.Performer.revoke(%Terminator.Performer{id: 1}, %Terminator.Role{id: 1})
+      iex> Terminator.UUID.Performer.revoke(%Terminator.UUID.Performer{id: 1}, %Terminator.UUID.Role{id: 1})
 
   """
   @spec revoke(Performer.t(), Ability.t() | Role.t()) :: Performer.t()
@@ -256,7 +256,7 @@ defmodule Terminator.Performer do
     |> Repo.one()
   end
 
-  def table, do: :terminator_performers
+  def table, do: :terminator_uuid_performers
 
   defp merge_uniq_grants(grants) do
     Enum.uniq_by(grants, fn grant ->

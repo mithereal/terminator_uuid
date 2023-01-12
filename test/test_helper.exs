@@ -4,6 +4,6 @@ Mix.shell(Mix.Shell.Process)
 
 ExUnit.start()
 
-Ecto.Adapters.SQL.Sandbox.mode(Terminator.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Terminator.UUID.Repo, :manual)
 
 {:ok, _} = Application.ensure_all_started(:ex_machina)

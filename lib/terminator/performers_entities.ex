@@ -1,12 +1,12 @@
-defmodule Terminator.PerformersEntities do
+defmodule Terminator.UUID.PerformersEntities do
   @moduledoc false
 
-  use Terminator.Schema
+  use Terminator.UUID.Schema
   import Ecto.Changeset
   alias __MODULE__
 
-  schema "terminator_performers_entities" do
-    belongs_to(:performer, Terminator.Performer,type: :binary_id)
+  schema "terminator_uuid_performers_entities" do
+    belongs_to(:performer, Terminator.UUID.Performer,type: :binary_id)
     field(:assoc_id, :binary_id)
     field(:assoc_type, :string)
     field(:abilities, {:array, :string}, default: [])
@@ -21,7 +21,7 @@ defmodule Terminator.PerformersEntities do
   end
 
   def create(
-        %Terminator.Performer{id: id},
+        %Terminator.UUID.Performer{id: id},
         %{__struct__: entity_name, id: entity_id},
         abilities \\ []
       ) do
@@ -31,7 +31,7 @@ defmodule Terminator.PerformersEntities do
       assoc_id: entity_id,
       abilities: abilities
     })
-    |> Terminator.Repo.insert!()
+    |> Terminator.UUID.Repo.insert!()
   end
 
   def normalize_struct_name(name) do

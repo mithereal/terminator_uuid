@@ -1,4 +1,4 @@
-defmodule Terminator.Repo do
+defmodule Terminator.UUID.Repo do
   @moduledoc """
   Ecto repository
   """

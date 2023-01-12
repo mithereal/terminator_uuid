@@ -4,19 +4,19 @@ defmodule Terminator do
 
   Terminator has 3 main components:
 
-    * `Terminator.Ability` - Representation of a single permission e.g. :view, :delete, :update
-    * `Terminator.Performer` - Main actor which is holding given abilities
-    * `Terminator.Role` - Grouped set of multiple abilities, e.g. :admin, :manager, :editor
+    * `Terminator.UUID.Ability` - Representation of a single permission e.g. :view, :delete, :update
+    * `Terminator.UUID.Performer` - Main actor which is holding given abilities
+    * `Terminator.UUID.Role` - Grouped set of multiple abilities, e.g. :admin, :manager, :editor
 
   ## Relations between models
 
-  `Terminator.Performer` -> `Terminator.Ability` [1-n] - Any given performer can hold multiple abilities
+  `Terminator.UUID.Performer` -> `Terminator.UUID.Ability` [1-n] - Any given performer can hold multiple abilities
   this allows you to have very granular set of abilities per each performer
 
-  `Terminator.Performer` -> `Terminator.Role` [1-n] - Any given performer can act as multiple roles
+  `Terminator.UUID.Performer` -> `Terminator.UUID.Role` [1-n] - Any given performer can act as multiple roles
   this allows you to manage multple sets of abilities for multiple performers at once
 
-  `Terminator.Role` -> `Terminator.Ability` [m-n] - Any role can have multiple abilities therefore
+  `Terminator.UUID.Role` -> `Terminator.UUID.Ability` [m-n] - Any role can have multiple abilities therefore
   you can have multiple roles to have different/same abilities
 
   ## Calculating abilities
@@ -29,8 +29,8 @@ defmodule Terminator do
 
   ## Available permissions
 
-    * `Terminator.has_ability/1` - Requires single ability to be present on performer
-    * `Terminator.has_role/1` - Requires single role to be present on performer
+    * `Terminator.UUID.has_ability/1` - Requires single ability to be present on performer
+    * `Terminator.UUID.has_role/1` - Requires single role to be present on performer
 
   """
 
@@ -73,10 +73,10 @@ defmodule Terminator do
   Resets ETS table
   """
   def reset_session() do
-    Terminator.Registry.insert(:required_abilities, [])
-    Terminator.Registry.insert(:required_roles, [])
-    Terminator.Registry.insert(:calculated_permissions, [])
-    Terminator.Registry.insert(:extra_rules, [])
+    Terminator.UUID.Registry.insert(:required_abilities, [])
+    Terminator.UUID.Registry.insert(:required_roles, [])
+    Terminator.UUID.Registry.insert(:calculated_permissions, [])
+    Terminator.UUID.Registry.insert(:extra_rules, [])
   end
 
   @doc """
@@ -172,9 +172,9 @@ defmodule Terminator do
   """
   defmacro calculated(func_name) when is_atom(func_name) do
     quote do
-      {:ok, current_performer} = Terminator.Registry.lookup(:current_performer)
+      {:ok, current_performer} = Terminator.UUID.Registry.lookup(:current_performer)
 
-      Terminator.Registry.add(
+      Terminator.UUID.Registry.add(
         :calculated_permissions,
         unquote(func_name)(current_performer)
       )
@@ -183,11 +183,11 @@ defmodule Terminator do
 
   defmacro calculated(callback) do
     quote do
-      {:ok, current_performer} = Terminator.Registry.lookup(:current_performer)
+      {:ok, current_performer} = Terminator.UUID.Registry.lookup(:current_performer)
 
       result = apply(unquote(callback), [current_performer])
 
-      Terminator.Registry.add(
+      Terminator.UUID.Registry.add(
         :calculated_permissions,
         result
       )
@@ -196,11 +196,11 @@ defmodule Terminator do
 
   defmacro calculated(func_name, bindings) when is_atom(func_name) do
     quote do
-      {:ok, current_performer} = Terminator.Registry.lookup(:current_performer)
+      {:ok, current_performer} = Terminator.UUID.Registry.lookup(:current_performer)
 
       result = unquote(func_name)(current_performer, unquote(bindings))
 
-      Terminator.Registry.add(
+      Terminator.UUID.Registry.add(
         :calculated_permissions,
         result
       )
@@ -209,11 +209,11 @@ defmodule Terminator do
 
   defmacro calculated(callback, bindings) do
     quote do
-      {:ok, current_performer} = Terminator.Registry.lookup(:current_performer)
+      {:ok, current_performer} = Terminator.UUID.Registry.lookup(:current_performer)
 
       result = apply(unquote(callback), [current_performer, unquote(bindings)])
 
-      Terminator.Registry.add(
+      Terminator.UUID.Registry.add(
         :calculated_permissions,
         result
       )
@@ -243,18 +243,18 @@ defmodule Terminator do
   @doc """
   Perform authorization on passed performer and abilities
   """
-  @spec has_ability?(Terminator.Performer.t(), atom()) :: boolean()
-  def has_ability?(%Terminator.Performer{} = performer, ability_name) do
+  @spec has_ability?(Terminator.UUID.Performer.t(), atom()) :: boolean()
+  def has_ability?(%Terminator.UUID.Performer{} = performer, ability_name) do
     perform_authorization!(performer, [Atom.to_string(ability_name)], []) == :ok
   end
 
   def has_ability?(
-        %Terminator.Performer{} = performer,
+        %Terminator.UUID.Performer{} = performer,
         ability_name,
         %{__struct__: _entity_name, id: _entity_id} = entity
       ) do
     active_abilities =
-      case Terminator.Performer.load_performer_entities(performer, entity) do
+      case Terminator.UUID.Performer.load_performer_entities(performer, entity) do
         nil -> []
         entity -> entity.abilities
       end
@@ -265,7 +265,7 @@ defmodule Terminator do
   @doc """
   Perform role check on passed performer and role
   """
-  def has_role?(%Terminator.Performer{} = performer, role_name) do
+  def has_role?(%Terminator.UUID.Performer{} = performer, role_name) do
     perform_authorization!(performer, nil, [Atom.to_string(role_name)], nil) == :ok
   end
 
@@ -279,7 +279,7 @@ defmodule Terminator do
     current_performer =
       case current_performer do
         nil ->
-          {:ok, current_performer} = Terminator.Registry.lookup(:current_performer)
+          {:ok, current_performer} = Terminator.UUID.Registry.lookup(:current_performer)
           current_performer
 
         _ ->
@@ -334,7 +334,7 @@ defmodule Terminator do
     value =
       case value do
         [] ->
-          {:ok, value} = Terminator.Registry.lookup(name)
+          {:ok, value} = Terminator.UUID.Registry.lookup(name)
           value
 
         value ->
@@ -352,10 +352,10 @@ defmodule Terminator do
     quote do
       import Terminator, only: [store_performer!: 1, load_and_store_performer!: 1]
 
-      def load_and_authorize_performer(%Terminator.Performer{id: _id} = performer),
+      def load_and_authorize_performer(%Terminator.UUID.Performer{id: _id} = performer),
         do: store_performer!(performer)
 
-      def load_and_authorize_performer(%{performer: %Terminator.Performer{id: _id} = performer}),
+      def load_and_authorize_performer(%{performer: %Terminator.UUID.Performer{id: _id} = performer}),
         do: store_performer!(performer)
 
       def load_and_authorize_performer(%{performer_id: performer_id})
@@ -368,22 +368,22 @@ defmodule Terminator do
   end
 
   @doc false
-  @spec load_and_store_performer!(integer()) :: {:ok, Terminator.Performer.t()}
+  @spec load_and_store_performer!(integer()) :: {:ok, Terminator.UUID.Performer.t()}
   def load_and_store_performer!(performer_id) do
-    performer = Terminator.Repo.get!(Terminator.Performer, performer_id)
+    performer = Terminator.UUID.Repo.get!(Terminator.UUID.Performer, performer_id)
     store_performer!(performer)
   end
 
   @doc false
-  @spec load_performer_roles(Terminator.Performer.t()) :: Terminator.Performer.t()
+  @spec load_performer_roles(Terminator.UUID.Performer.t()) :: Terminator.UUID.Performer.t()
   def load_performer_roles(performer) do
-    performer |> Terminator.Repo.preload([:roles])
+    performer |> Terminator.UUID.Repo.preload([:roles])
   end
 
   @doc false
-  @spec store_performer!(Terminator.Performer.t()) :: {:ok, Terminator.Performer.t()}
-  def store_performer!(%Terminator.Performer{id: _id} = performer) do
-    Terminator.Registry.insert(:current_performer, performer)
+  @spec store_performer!(Terminator.UUID.Performer.t()) :: {:ok, Terminator.UUID.Performer.t()}
+  def store_performer!(%Terminator.UUID.Performer{id: _id} = performer) do
+    Terminator.UUID.Registry.insert(:current_performer, performer)
     {:ok, performer}
   end
 
@@ -466,14 +466,14 @@ defmodule Terminator do
   """
   @spec has_ability(atom()) :: {:ok, atom()}
   def has_ability(ability) do
-    Terminator.Registry.add(:required_abilities, Atom.to_string(ability))
+    Terminator.UUID.Registry.add(:required_abilities, Atom.to_string(ability))
     {:ok, ability}
   end
 
   def has_ability(ability, %{__struct__: _entity_name, id: _entity_id} = entity) do
-    {:ok, current_performer} = Terminator.Registry.lookup(:current_performer)
+    {:ok, current_performer} = Terminator.UUID.Registry.lookup(:current_performer)
 
-    Terminator.Registry.add(:extra_rules, has_ability?(current_performer, ability, entity))
+    Terminator.UUID.Registry.add(:extra_rules, has_ability?(current_performer, ability, entity))
     {:ok, ability}
   end
 
@@ -494,7 +494,7 @@ defmodule Terminator do
   """
   @spec has_role(atom()) :: {:ok, atom()}
   def has_role(role) do
-    Terminator.Registry.add(:required_roles, Atom.to_string(role))
+    Terminator.UUID.Registry.add(:required_roles, Atom.to_string(role))
     {:ok, role}
   end
 end

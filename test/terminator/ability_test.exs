@@ -1,8 +1,8 @@
-defmodule Terminator.AbilityTest do
-  use Terminator.EctoCase
-  alias Terminator.Ability
+defmodule Terminator.UUID.AbilityTest do
+  use Terminator.UUID.EctoCase
+  alias Terminator.UUID.Ability
 
-  describe "Terminator.Ability.changeset/2" do
+  describe "Terminator.UUID.Ability.changeset/2" do
     test "changeset is invalid" do
       changeset = Ability.changeset(%Ability{}, %{})
 
@@ -17,7 +17,7 @@ defmodule Terminator.AbilityTest do
     end
   end
 
-  describe "Terminator.Ability.build/2" do
+  describe "Terminator.UUID.Ability.build/2" do
     test "builds correct changeset" do
       classic_changeset =
         Ability.changeset(%Ability{}, %{

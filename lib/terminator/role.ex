@@ -1,11 +1,11 @@
-defmodule Terminator.Role do
+defmodule Terminator.UUID.Role do
   @moduledoc ~S"""
   Role is grouped representation of multiple abilities.
   It allows you to assign or manage multiple roles at once.
 
   """
 
-  use Terminator.Schema
+  use Terminator.UUID.Schema
   import Ecto.Changeset
 
   alias __MODULE__
@@ -13,12 +13,12 @@ defmodule Terminator.Role do
   @typedoc "A role struct"
   @type t :: %Role{}
 
-  schema "terminator_roles" do
+  schema "terminator_uuid_roles" do
     field(:identifier, :string)
     field(:name, :string)
     field(:abilities, {:array, :string}, default: [])
 
-    many_to_many(:performers, Terminator.Performer, join_through: Terminator.PerformersRoles)
+    many_to_many(:performers, Terminator.UUID.Performer, join_through: Terminator.UUID.PerformersRoles)
 
     timestamps()
   end
@@ -36,7 +36,7 @@ defmodule Terminator.Role do
 
   ## Examples
 
-      iex> changeset = Terminator.Role.build("admin", ["delete_account"], "Administrator of application")
+      iex> changeset = Terminator.UUID.Role.build("admin", ["delete_account"], "Administrator of application")
       #Ecto.Changeset<
         action: nil,
         changes: %{
@@ -45,13 +45,13 @@ defmodule Terminator.Role do
         name: "Administrator of application"
       },
       errors: [],
-      data: #Terminator.Role<>,
+      data: #Terminator.UUID.Role<>,
       valid?: true
       >
       iex> changeset |> Repo.insert
       {:ok,
-      %Terminator.Role{
-        __meta__: #Ecto.Schema.Metadata<:loaded, "terminator_roles">,
+      %Terminator.UUID.Role{
+        __meta__: #Ecto.Schema.Metadata<:loaded, "terminator_uuid_roles">,
         abilities: ["delete_account"],
         id: 1,
         identifier: "admin",
@@ -72,22 +72,22 @@ defmodule Terminator.Role do
   end
 
   @doc """
-  Grant `Terminator.Ability` to a role.
+  Grant `Terminator.UUID.Ability` to a role.
 
   ## Examples
 
-  Function accepts `Terminator.Ability`  grant.
+  Function accepts `Terminator.UUID.Ability`  grant.
   Function is merging existing grants with the new ones, so calling grant with same
   grants will not duplicate entries in table.
 
   To grant particular ability to a role
 
-      iex> Terminator.Performer.grant(%Terminator.Role{id: 1}, %Terminator.Ability{identifier: "manage"})
+      iex> Terminator.UUID.Performer.grant(%Terminator.UUID.Role{id: 1}, %Terminator.UUID.Ability{identifier: "manage"})
 
   """
 
-  @spec grant(Role.t(), Terminator.Ability.t()) :: Role.t()
-  def grant(%Role{id: _id} = role, %Terminator.Ability{identifier: _identifier} = ability) do
+  @spec grant(Role.t(), Terminator.UUID.Ability.t()) :: Role.t()
+  def grant(%Role{id: _id} = role, %Terminator.UUID.Ability{identifier: _identifier} = ability) do
     # Preload performer abilityies
     abilities = Enum.uniq(role.abilities ++ [ability.identifier])
 
@@ -95,26 +95,26 @@ defmodule Terminator.Role do
       changeset(role)
       |> put_change(:abilities, abilities)
 
-    changeset |> Terminator.Repo.update!()
+    changeset |> Terminator.UUID.Repo.update!()
   end
 
   def grant(_, _), do: raise(ArgumentError, message: "Bad arguments for giving grant")
 
   @doc """
-  Revoke `Terminator.Ability` from a role.
+  Revoke `Terminator.UUID.Ability` from a role.
 
   ## Examples
 
-  Function accepts `Terminator.Ability` grant.
-  Function is directly opposite of `Terminator.Role.grant/2`
+  Function accepts `Terminator.UUID.Ability` grant.
+  Function is directly opposite of `Terminator.UUID.Role.grant/2`
 
   To revoke particular ability from a given role
 
-      iex> Terminator.Performer.revoke(%Terminator.Role{id: 1}, %Terminator.Ability{identifier: "manage"})
+      iex> Terminator.UUID.Performer.revoke(%Terminator.UUID.Role{id: 1}, %Terminator.UUID.Ability{identifier: "manage"})
 
   """
-  @spec revoke(Role.t(), Terminator.Ability.t()) :: Role.t()
-  def revoke(%Role{id: _id} = role, %Terminator.Ability{identifier: _identifier} = ability) do
+  @spec revoke(Role.t(), Terminator.UUID.Ability.t()) :: Role.t()
+  def revoke(%Role{id: _id} = role, %Terminator.UUID.Ability{identifier: _identifier} = ability) do
     abilities =
       Enum.filter(role.abilities, fn grant ->
         grant != ability.identifier
@@ -124,7 +124,7 @@ defmodule Terminator.Role do
       changeset(role)
       |> put_change(:abilities, abilities)
 
-    changeset |> Terminator.Repo.update!()
+    changeset |> Terminator.UUID.Repo.update!()
   end
 
   def revoke(_, _), do: raise(ArgumentError, message: "Bad arguments for revoking grant")
