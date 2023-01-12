@@ -1,4 +1,4 @@
-defmodule Terminator do
+defmodule Terminator.UUID do
   @moduledoc """
   Main Terminator module for including macros
 

@@ -56,7 +56,7 @@ defmodule Terminator.UUID.MixProject do
     [
       files: ~w(lib priv/repo/migrations .formatter.exs mix.exs README*),
       licenses: ["GPL"],
-      links: %{"GitHub" => "https://github.com/MilosMosovsky/terminator"}
+      links: %{"GitHub" => "https://github.com/data-twister/terminator"}
     ]
   end
 
@@ -64,7 +64,7 @@ defmodule Terminator.UUID.MixProject do
     [
       extras: ["README.md"],
       main: "readme",
-      source_url: "https://github.com/MilosMosovsky/terminator",
+      source_url: "https://github.com/data-twister/terminator",
       groups_for_modules: [
         Models: [
           Terminator.UUID.Performer,

@@ -1,8 +1,8 @@
 # 🛡 Terminator with uuid 🛡
 
-[![Coverage Status](https://img.shields.io/coveralls/github/MilosMosovsky/terminator.svg?style=flat-square)](https://coveralls.io/github/MilosMosovsky/terminator)
-[![Build Status](https://img.shields.io/travis/MilosMosovsky/terminator.svg?style=flat-square)](https://travis-ci.org/MilosMosovsky/terminator)
-[![Version](https://img.shields.io/hexpm/v/terminator.svg?style=flat-square)](https://hex.pm/packages/terminator)
+[![Coverage Status](https://img.shields.io/coveralls/github/data-twister/terminator_uuid.svg?style=flat-square)](https://coveralls.io/github/data-twister/terminator_uuid)
+[![Build Status](https://img.shields.io/travis/data-twister/terminator_uuid.svg?style=flat-square)](https://travis-ci.org/data-twister/terminator_uuid)
+[![Version](https://img.shields.io/hexpm/v/terminator_uuid.svg?style=flat-square)](https://hex.pm/packages/terminator_uuid)
 
 Terminator is toolkit for granular ability management for performers. It allows you to define granular abilities such as:
 this differs from terminator in now the id key associations use ecto uuid vs integers
@@ -69,7 +69,7 @@ defmodule Sample.Post
 ```elixir
 def deps do
   [
-    {:terminator, "~> 0.5.2"}
+    {:terminator_uuid, "~> 0.5.2"}
   ]
 end
 ```
@@ -84,7 +84,7 @@ config :terminator, Terminator.UUID.Repo,
 ```
 
 ```elixir
-iex> mix terminator.setup
+iex> mix terminator.UUID.setup
 ```
 
 ### Usage with ecto
@@ -400,3 +400,4 @@ iex> performer |> Terminator.UUID.Repo.preload([:roles, :abilities])
 ## License
 
 [MIT © Milos Mosovsky](mailto:milos@mosovsky.com)
+[MIT © Jason Clark](mailto:mithereal@gmail.com)
