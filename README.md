@@ -20,11 +20,11 @@ Here is a small example:
 defmodule Sample.Post
   use Terminator
 
-  def delete_post(id) do
+  def delete_post(post_uuid) do
     performer_uuid = Ecto.UUID.bingenerate()
     performer = Sample.Repo.get(Terminator.UUID.Performer, performer_uuid)
     load_and_authorize_performer(performer)
-    post_uuid = Ecto.UUID.bingenerate()
+
     post = %Post{id: post_uuid}
 
     permissions do
