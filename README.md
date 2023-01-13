@@ -2,8 +2,8 @@
 
 [![Version](https://img.shields.io/hexpm/v/terminator_uuid.svg?style=flat-square)](https://hex.pm/packages/terminator_uuid)
 
-Terminator is toolkit for granular ability management for performers. It allows you to define granular abilities such as:
-this differs from terminator in now the id key associations use ecto uuid vs integers
+Terminator is toolkit for granular ability management for performers. This differs from terminator in now the id key associations use ecto uuid vs integers It allows you to define granular abilities such as:
+
 
 - `Performer -> Ability`
 - `Performer -> [Ability, Ability, ...]`
