@@ -75,7 +75,7 @@ end
 
 ```elixir
 # In your config/config.exs file
-config :terminator, Terminator.UUID.Repo,
+config :terminator_uuid, Terminator.UUID.Repo,
   username: "postgres",
   password: "postgres",
   database: "terminator_uuid_dev",
@@ -98,7 +98,7 @@ defmodule Sample.Migrations.CreateUsersTable do
   def change do
     create table(:users) do
       add :username, :string
-      add :performer_id, references(Terminator.UUID.Performer.table())
+      add :performer_id, references(Terminator.UUID.Performer.table(), type: :binary_id)
 
       timestamps()
     end
@@ -131,8 +131,8 @@ end
 defmodule Sample.Post
   use Terminator
 
-  def delete_post(id) do
-    user = Sample.Repo.get(Sample.User, 1)
+  def delete_post(uuid) do
+    user = Sample.Repo.get(Sample.User, uuid)
     load_and_authorize_performer(user)
     # Function allows multiple signatues of performer it can
     # be either:
@@ -148,13 +148,13 @@ defmodule Sample.Post
     end
 
     as_authorized do
-      Sample.Repo.get(Sample.Post, id) |> Sample.repo.delete()
+      Sample.Repo.get(Sample.Post, uuid) |> Sample.repo.delete()
     end
 
     # Notice that you can use both macros or functions
 
     case is_authorized? do
-      :ok -> Sample.Repo.get(Sample.Post, id) |> Sample.repo.delete()
+      :ok -> Sample.Repo.get(Sample.Post, uuid) |> Sample.repo.delete()
       {:error, message} -> "Raise error"
       _ -> "Raise error"
     end
@@ -170,8 +170,8 @@ Often you will come to case when `static` permissions are not enough. For exampl
 
 ```elixir
 defmodule Sample.Post do
-  def create() do
-    user = Sample.Repo.get(Sample.User, 1)
+  def create(uuid) do
+    user = Sample.Repo.get(Sample.User, uuid)
     load_and_authorize_performer(user)
 
     permissions do
@@ -187,8 +187,8 @@ We can also use DSL form of `calculated` keyword
 
 ```elixir
 defmodule Sample.Post do
-  def create() do
-    user = Sample.Repo.get(Sample.User, 1)
+  def create(uuid) do
+    user = Sample.Repo.get(Sample.User, uuid)
     load_and_authorize_performer(user)
 
     permissions do
@@ -208,9 +208,9 @@ When we need to performer calculation based on external data we can invoke bindi
 
 ```elixir
 defmodule Sample.Post do
-  def create() do
-    user = Sample.Repo.get(Sample.User, 1)
-    post = %Post{owner_id: 1}
+  def create(post_uuid, performer_uuid) do
+    user = Sample.Repo.get(Sample.User, performer_uuid)
+    post = %Post{owner_id: post_uuid}
     load_and_authorize_performer(user)
 
     permissions do
