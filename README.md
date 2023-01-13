@@ -22,7 +22,7 @@ defmodule Sample.Post
 
   def delete_post(post_uuid) do
     performer_uuid = Ecto.UUID.bingenerate()
-    performer = Sample.Repo.get(Terminator.UUID.Performer, performer_uuid)
+    performer = Terminator.Repo.get(Terminator.UUID.Performer, performer_uuid)
     load_and_authorize_performer(performer)
 
     post = %Post{id: post_uuid}
