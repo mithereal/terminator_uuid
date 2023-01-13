@@ -21,9 +21,11 @@ defmodule Sample.Post
   use Terminator
 
   def delete_post(id) do
-    performer = Sample.Repo.get(Terminator.UUID.Performer, 1)
+    performer_uuid = Ecto.UUID.bingenerate()
+    performer = Sample.Repo.get(Terminator.UUID.Performer, performer_uuid)
     load_and_authorize_performer(performer)
-    post = %Post{id: 1}
+    post_uuid = Ecto.UUID.bingenerate()
+    post = %Post{id: post_uuid}
 
     permissions do
       has_role(:admin) # or
@@ -36,13 +38,13 @@ defmodule Sample.Post
     end
 
     as_authorized do
-      Sample.Repo.get(Sample.Post, id) |> Sample.repo.delete()
+      Sample.Repo.get(Sample.Post, post_uuid) |> Sample.repo.delete()
     end
 
     # Notice that you can use both macros or functions
 
     case is_authorized? do
-      :ok -> Sample.Repo.get(Sample.Post, id) |> Sample.repo.delete()
+      :ok -> Sample.Repo.get(Sample.Post, post_uuid) |> Sample.repo.delete()
       {:error, message} -> "Raise error"
       _ -> "Raise error"
     end
