@@ -1,7 +1,5 @@
 # 🛡 Terminator with uuid 🛡
 
-[![Coverage Status](https://img.shields.io/coveralls/github/data-twister/terminator_uuid.svg?style=flat-square)](https://coveralls.io/github/data-twister/terminator_uuid)
-[![Build Status](https://img.shields.io/travis/data-twister/terminator_uuid.svg?style=flat-square)](https://travis-ci.org/data-twister/terminator_uuid)
 [![Version](https://img.shields.io/hexpm/v/terminator_uuid.svg?style=flat-square)](https://hex.pm/packages/terminator_uuid)
 
 Terminator is toolkit for granular ability management for performers. It allows you to define granular abilities such as:
