@@ -131,8 +131,8 @@ end
 defmodule Sample.Post
   use Terminator
 
-  def delete_post(uuid) do
-    user = Sample.Repo.get(Sample.User, uuid)
+  def delete_post(uuid, performer_uuid) do
+    user = Sample.Repo.get(Sample.User, performer_uuid)
     load_and_authorize_performer(user)
     # Function allows multiple signatues of performer it can
     # be either:
@@ -170,8 +170,8 @@ Often you will come to case when `static` permissions are not enough. For exampl
 
 ```elixir
 defmodule Sample.Post do
-  def create(uuid) do
-    user = Sample.Repo.get(Sample.User, uuid)
+  def create(uuid, performer_uuid) do
+    user = Sample.Repo.get(Sample.User, performer_uuid)
     load_and_authorize_performer(user)
 
     permissions do
@@ -187,8 +187,8 @@ We can also use DSL form of `calculated` keyword
 
 ```elixir
 defmodule Sample.Post do
-  def create(uuid) do
-    user = Sample.Repo.get(Sample.User, uuid)
+  def create(uuid, performer_uuid) do
+    user = Sample.Repo.get(Sample.User, performer_uuid)
     load_and_authorize_performer(user)
 
     permissions do
@@ -208,9 +208,9 @@ When we need to performer calculation based on external data we can invoke bindi
 
 ```elixir
 defmodule Sample.Post do
-  def create(post_uuid, performer_uuid) do
+  def create(uuid, performer_uuid) do
     user = Sample.Repo.get(Sample.User, performer_uuid)
-    post = %Post{owner_id: post_uuid}
+    post = %Post{owner_id: uuid}
     load_and_authorize_performer(user)
 
     permissions do
@@ -268,8 +268,8 @@ We can simplify example in this case by excluding DSL for permissions
 
 ```elixir
 defmodule Sample.Post do
-  def create(uuid) do
-    user = Sample.Repo.get(Sample.User, uuid)
+  def create(uuid, performer_uuid) do
+    user = Sample.Repo.get(Sample.User, performer_uuid)
     post = %Post{owner_id: user.id}
 
     # We can also use has_ability?/2
@@ -299,9 +299,9 @@ true
 
 ```elixir
 defmodule Sample.Post do
-  def delete() do
-    user = Sample.Repo.get(Sample.User, 1)
-    post = %Post{id: 1}
+  def delete(post_id, performer_uuid) do
+    user = Sample.Repo.get(Sample.User, performer_uuid)
+    post = %Post{id: post_id}
     load_and_authorize_performer(user)
 
     permissions do
