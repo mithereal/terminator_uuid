@@ -20,11 +20,11 @@ Here is a small example:
 defmodule Sample.Post
   use Terminator
 
-  def delete_post(post_uuid, performer_uuid \\ Ecto.UUID.bingenerate()) do
+  def delete_post(uuid, performer_uuid \\ Ecto.UUID.bingenerate()) do
     performer = Terminator.Repo.get(Terminator.UUID.Performer, performer_uuid)
     load_and_authorize_performer(performer)
 
-    post = %Post{id: post_uuid}
+    post = %Post{id: uuid}
 
     permissions do
       has_role(:admin) # or
@@ -37,13 +37,13 @@ defmodule Sample.Post
     end
 
     as_authorized do
-      Sample.Repo.get(Sample.Post, post_uuid) |> Sample.repo.delete()
+      Sample.Repo.get(Sample.Post, uuid) |> Sample.repo.delete()
     end
 
     # Notice that you can use both macros or functions
 
     case is_authorized? do
-      :ok -> Sample.Repo.get(Sample.Post, post_uuid) |> Sample.repo.delete()
+      :ok -> Sample.Repo.get(Sample.Post, uuid) |> Sample.repo.delete()
       {:error, message} -> "Raise error"
       _ -> "Raise error"
     end
