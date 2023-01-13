@@ -233,9 +233,9 @@ To perform exclusive abilities such as `when User is owner of post AND is in edi
 
 ```elixir
 defmodule Sample.Post do
-  def create() do
-    user = Sample.Repo.get(Sample.User, 1)
-    post = %Post{owner_id: 1}
+  def create(performer_uuid) do
+    user = Sample.Repo.get(Sample.User, performer_uuid)
+    post = %Post{owner_id: user.id}
     load_and_authorize_performer(user)
 
     permissions do
@@ -268,9 +268,9 @@ We can simplify example in this case by excluding DSL for permissions
 
 ```elixir
 defmodule Sample.Post do
-  def create() do
-    user = Sample.Repo.get(Sample.User, 1)
-    post = %Post{owner_id: 1}
+  def create(uuid) do
+    user = Sample.Repo.get(Sample.User, uuid)
+    post = %Post{owner_id: user.id}
 
     # We can also use has_ability?/2
     if has_role?(user, :admin) and is_owner(user, post) do
