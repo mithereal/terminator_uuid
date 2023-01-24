@@ -1,5 +1,5 @@
 defmodule Post do
-  use Terminator
+  use Terminator.UUID
 
   def delete(performer) do
     load_and_authorize_performer(performer)
