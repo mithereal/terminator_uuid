@@ -51,7 +51,7 @@ defmodule Terminator.UUID do
   ## Example
 
       defmodule HelloTest do
-        use Terminator
+        use Terminator.UUID
 
         def test_authorization do
           permissions do
@@ -85,7 +85,7 @@ defmodule Terminator.UUID do
   ## Example
 
       defmodule HelloTest do
-        use Terminator
+        use Terminator.UUID
 
         def test_authorization do
           as_authorized do
@@ -109,7 +109,7 @@ defmodule Terminator.UUID do
   ## Examples
 
       defmodule HelloTest do
-        use Terminator
+        use Terminator.UUID
 
         def test_authorization do
           permissions do
@@ -127,7 +127,7 @@ defmodule Terminator.UUID do
   You can also use DSL form which takes function name as argument
 
         defmodule HelloTest do
-        use Terminator
+        use Terminator.UUID
 
         def test_authorization do
           permissions do
@@ -147,7 +147,7 @@ defmodule Terminator.UUID do
     For more complex calculation you need to pass bindings to the function
 
         defmodule HelloTest do
-        use Terminator
+        use Terminator.UUID
 
         def test_authorization do
           post = %Post{owner_id: 1}
@@ -226,7 +226,7 @@ defmodule Terminator.UUID do
   ## Example
 
       defmodule HelloTest do
-        use Terminator
+        use Terminator.UUID
 
         def test_authorization do
           case is_authorized? do
@@ -350,7 +350,7 @@ defmodule Terminator.UUID do
   @doc false
   def create_terminator() do
     quote do
-      import Terminator, only: [store_performer!: 1, load_and_store_performer!: 1]
+      import Terminator.UUID, only: [store_performer!: 1, load_and_store_performer!: 1]
 
       def load_and_authorize_performer(%Terminator.UUID.Performer{id: _id} = performer),
         do: store_performer!(performer)
@@ -455,7 +455,7 @@ defmodule Terminator.UUID do
   ## Example
 
       defmodule HelloTest do
-        use Terminator
+        use Terminator.UUID
 
         def test_authorization do
           permissions do
@@ -483,7 +483,7 @@ defmodule Terminator.UUID do
   ## Example
 
       defmodule HelloTest do
-        use Terminator
+        use Terminator.UUID
 
         def test_authorization do
           permissions do
