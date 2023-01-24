@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Terminator.UUID.Install do
   """
 
   def run(_args) do
-    source = Path.join(Application.app_dir(:terminator, "/priv/"), "setup_tables.exs")
+    source = Path.join(Application.app_dir(:terminator_uuid, "/priv/"), "setup_tables.exs")
 
     target =
       Path.join(File.cwd!(), "/priv/repo/migrations/#{timestamp()}_setup_terminator_uuid_tables.exs")
