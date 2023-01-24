@@ -68,7 +68,7 @@ defmodule Sample.Post
 ```elixir
 def deps do
   [
-    {:terminator_uuid, "~> 0.5.2"}
+    {:terminator_uuid, "~> 0.5.5"}
   ]
 end
 ```
