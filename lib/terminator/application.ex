@@ -16,7 +16,7 @@ defmodule Terminator.UUID.Application do
   end
 
   defp load_repos do
-    case Application.get_env(:terminator, :ecto_repos) do
+    case Application.get_env(:terminator_uuid, :ecto_repos) do
       nil -> [Terminator.UUID.Repo]
       repos -> repos
     end

@@ -4,6 +4,6 @@ defmodule Terminator.UUID.Repo do
   """
 
   use Ecto.Repo,
-    otp_app: :terminator,
+    otp_app: :terminator_uuid,
     adapter: Ecto.Adapters.Postgres
 end
