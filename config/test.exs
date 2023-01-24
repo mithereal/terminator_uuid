@@ -5,7 +5,7 @@
 use Mix.Config
 
 # Configure your database
-config :terminator, Terminator.UUID.Repo,
+config :terminator_uuid, Terminator.UUID.Repo,
   username: "postgres",
   password: "postgres",
   database: "api_test",

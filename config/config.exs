@@ -2,10 +2,10 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :terminator,
+config :terminator_uuid,
   ecto_repos: [Terminator.UUID.Repo]
 
-config :terminator, Terminator.UUID.Repo,
+config :terminator_uuid, Terminator.UUID.Repo,
   username: "postgres",
   password: "postgres",
   database: "api_dev",
