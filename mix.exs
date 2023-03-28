@@ -55,7 +55,7 @@ defmodule Terminator.UUID.MixProject do
   defp package() do
     [
       files: ~w(lib priv/repo/migrations .formatter.exs mix.exs README*),
-      licenses: ["GPL"],
+      licenses: ["GPL-3.0-or-later"],
       links: %{"GitHub" => "https://github.com/data-twister/terminator_uuid"}
     ]
   end
