@@ -3,13 +3,7 @@
 use Mix.Config
 
 config :terminator_uuid,
-  ecto_repos: [Terminator.UUID.Repo]
-
-config :terminator_uuid, Terminator.UUID.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "api_dev",
-  hostname: "localhost"
+  ecto_repos: [Terminator.UUID.Repo.Null]
 
 if File.exists?(Path.join(Path.dirname(__ENV__.file), "#{Mix.env()}.exs")) do
   import_config "#{Mix.env()}.exs"

@@ -1,9 +1,20 @@
 defmodule Terminator.UUID.Schema do
-  defmacro __using__(_) do
-    quote do
-      use Ecto.Schema
-      @primary_key {:id, :binary_id, autogenerate: true}
-      @foreign_key_type :binary_id
+  @moduledoc false
+  defmacro __using__(_options) do
+    type = Terminator.UUID.Config.key_type()
+
+    case type do
+      :binary_id ->
+        quote do
+          use Ecto.Schema
+          @primary_key {:id, :binary_id, autogenerate: true}
+          @foreign_key_type :binary_id
+        end
+
+      _ ->
+        quote do
+          use Ecto.Schema
+        end
     end
   end
 end

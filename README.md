@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/hexpm/v/terminator_uuid.svg?style=flat-square)](https://hex.pm/packages/terminator_uuid)
 
-Terminator is toolkit for granular ability management for performers. This differs from terminator in now the id key associations use ecto uuid vs integers It allows you to define granular abilities such as:
+Terminator is toolkit for granular ability management for performers. This differs from terminator in now we have user selectable id key associations use uuid or integer It allows you to define granular abilities such as:
 
 
 - `Performer -> Ability`
@@ -79,7 +79,9 @@ config :terminator_uuid, Terminator.UUID.Repo,
   username: "postgres",
   password: "postgres",
   database: "terminator_uuid_dev",
-  hostname: "localhost"
+  hostname: "localhost",
+  primary_key_type: :uuid 
+
 ```
 
 ```elixir
