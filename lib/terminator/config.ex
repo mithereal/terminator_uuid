@@ -3,7 +3,7 @@ defmodule Terminator.UUID.Config do
   Return value by key from config.exs file.
   """
 
-  alias ExCatalog.InvalidConfigError
+  alias Terminator.UUID.InvalidConfigError
 
   def get(name, default \\ nil) do
     Application.get_env(:terminator_uuid, name, default)
