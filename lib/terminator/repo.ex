@@ -10,7 +10,6 @@ end
 
 defmodule Terminator.UUID.Repo.Null do
   use GenServer
-  use Paginator
 
   def child_spec(init) do
     %{
