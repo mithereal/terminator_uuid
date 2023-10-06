@@ -1,8 +1,10 @@
 defmodule Terminator.UUID.Repo.Migrations.SetupTables do
   use Ecto.Migration
 
+  alias Terminator.UUID.Config
+
   def change do
-    key_type = ExCatalog.Config.key_type(:migration)
+    key_type = Config.key_type(:migration)
 
     create table(:terminator_uuid_performers, primary_key: false) do
       add(:id, key_type, primary_key: true)
@@ -12,7 +14,7 @@ defmodule Terminator.UUID.Repo.Migrations.SetupTables do
     end
 
     create table(:terminator_uuid_roles, primary_key: false) do
-      key_type = ExCatalog.Config.key_type(:migration)
+      key_type = Config.key_type(:migration)
 
       add(:id, key_type, primary_key: true)
       add(:identifier, :string)
@@ -25,7 +27,7 @@ defmodule Terminator.UUID.Repo.Migrations.SetupTables do
     create(unique_index(:terminator_uuid_roles, [:identifier]))
 
     create table(:terminator_uuid_performers_roles, primary_key: false) do
-      key_type = ExCatalog.Config.key_type(:migration)
+      key_type = Config.key_type(:migration)
 
       add(:id, key_type, primary_key: true)
       add(:performer_id, references(:terminator_uuid_performers, type: :uuid))
@@ -35,7 +37,7 @@ defmodule Terminator.UUID.Repo.Migrations.SetupTables do
     end
 
     create table(:terminator_uuid_abilities, primary_key: false) do
-      key_type = ExCatalog.Config.key_type(:migration)
+      key_type = Config.key_type(:migration)
 
       add(:id, key_type, primary_key: true)
       add(:identifier, :string)
@@ -47,7 +49,7 @@ defmodule Terminator.UUID.Repo.Migrations.SetupTables do
     create(unique_index(:terminator_uuid_abilities, [:identifier]))
 
     create table(:terminator_uuid_performers_entities, primary_key: false) do
-      key_type = ExCatalog.Config.key_type(:migration)
+      key_type = Config.key_type(:migration)
 
       add(:id, key_type, primary_key: true)
       add(:performer_id, references(Terminator.UUID.Performer.table(), type: :uuid))
