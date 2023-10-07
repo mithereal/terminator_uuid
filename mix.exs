@@ -1,7 +1,7 @@
 defmodule Terminator.UUID.MixProject do
   use Mix.Project
 
-  @version "0.6.0"
+  @version "0.6.1"
   def project do
     [
       app: :terminator_uuid,
@@ -64,6 +64,8 @@ defmodule Terminator.UUID.MixProject do
     [
       extras: ["README.md"],
       main: "readme",
+      homepage_url: @source_url,
+      source_ref: "v#{@version}",
       source_url: "https://github.com/data-twister/terminator_uuid",
       groups_for_modules: [
         Models: [
