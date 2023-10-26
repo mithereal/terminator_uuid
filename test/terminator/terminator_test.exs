@@ -37,62 +37,6 @@ defmodule Post do
     end
   end
 
-  def no_macro(performer) do
-    load_and_authorize_performer(performer)
-
-    permissions do
-      has_ability(:update_post)
-    end
-
-    case is_authorized?() do
-      :ok -> {:ok, "Authorized"}
-      _ -> raise ArgumentError, message: "Not authorized"
-    end
-  end
-
-  def no_permissions(performer) do
-    load_and_authorize_performer(performer)
-
-    permissions do
-    end
-
-    case is_authorized?() do
-      :ok -> {:ok, "Authorized"}
-      _ -> raise ArgumentError, message: "Not authorized"
-    end
-  end
-
-  def calculated(performer, email_confirmed) do
-    load_and_authorize_performer(performer)
-
-    permissions do
-      calculated(fn _performer ->
-        email_confirmed
-      end)
-    end
-
-    case is_authorized?() do
-      :ok -> {:ok, "Authorized"}
-      _ -> raise ArgumentError, message: "Not authorized"
-    end
-  end
-
-  def calculated_macro(performer) do
-    load_and_authorize_performer(performer)
-
-    permissions do
-      calculated(:confirmed_email)
-    end
-
-    case is_authorized?() do
-      :ok -> {:ok, "Authorized"}
-      _ -> raise ArgumentError, message: "Not authorized"
-    end
-  end
-
-  def confirmed_email(_performer) do
-    false
-  end
 end
 
 defmodule Terminator.UUID.TerminatorTest do
